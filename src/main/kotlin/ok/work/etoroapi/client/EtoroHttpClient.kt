@@ -116,7 +116,7 @@ class EtoroHttpClient {
                     if (!imageData.has("Uri")) {
                         continue;
                     }
-                    val image = Image(imageData.getInt("Width"), imageData.getInt("Height"), imageData.getString("Uri"))
+                    val image = Image(if (imageData.has("Width")) imageData.getInt("Width") else 100, if (imageData.has("Height")) imageData.getInt("Height") else 100, imageData.getString("Uri"))
                     imageList.add(image)
                 }
                 var id: String
