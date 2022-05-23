@@ -42,6 +42,10 @@ abstract class EtoroListener : SubscriptionListener {
         println("onUnsubscription")
     }
 
+    override fun onRealMaxFrequency(frequency: String?) {
+        println("OnRealMaxFrequency")
+    }
+
     override fun onCommandSecondLevelItemLostUpdates(lostUpdates: Int, key: String) {
         println("onCommandSecondLevelItemLostUpdates $lostUpdates")
     }

@@ -7,7 +7,6 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import ok.work.etoroapi.client.EtoroHttpClient
 import ok.work.etoroapi.client.websocket.EtoroLightStreamerClient
 import ok.work.etoroapi.model.PositionType
-import org.apache.xpath.operations.Bool
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import java.io.File

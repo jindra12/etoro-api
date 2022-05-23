@@ -41,7 +41,7 @@ dependencies {
     compile("io.springfox:springfox-swagger-ui:2.9.2")
     compile("io.springfox:springfox-swagger-common:2.9.2")
 
-    compile("org.seleniumhq.selenium:selenium-java:3.0.1")
+    compile("org.seleniumhq.selenium:selenium-java:4.1.4")
     compile("com.github.detro.ghostdriver:phantomjsdriver:1.0.1")
 
     // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
