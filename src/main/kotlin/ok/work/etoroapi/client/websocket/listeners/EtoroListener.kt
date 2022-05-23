@@ -4,7 +4,7 @@ import com.lightstreamer.client.ItemUpdate
 import com.lightstreamer.client.Subscription
 import com.lightstreamer.client.SubscriptionListener
 
-open class EtoroListener : SubscriptionListener {
+abstract class EtoroListener : SubscriptionListener {
     
     override fun onListenEnd(subscription: Subscription) {
         println("onListenEnd")
