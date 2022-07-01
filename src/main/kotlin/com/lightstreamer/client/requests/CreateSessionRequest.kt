@@ -5,13 +5,13 @@ package com.lightstreamer.client.requests
 import com.lightstreamer.client.session.InternalConnectionDetails
 import com.lightstreamer.client.session.InternalConnectionOptions
 
-class CreateSessionRequest(targetServer: String, polling: Boolean, cause: String?, options: InternalConnectionOptions, details: InternalConnectionDetails, delay: Long, password: String?, oldSession: String?, serverBusy: Boolean) : SessionRequest(polling, delay) {
+class CreateSessionRequest(targetServer: String, polling: Boolean, cause: String?, options: InternalConnectionOptions, details: InternalConnectionDetails, delay: Long, password: String?, oldSession: String?) : SessionRequest(polling, delay) {
     init {
         this.setServer(targetServer)
-        // this.addParameter("LS_op2", "create")
+        this.addParameter("LS_op2", "create")
         this.addParameter("LS_polling", "true")
         if (cause != null) {
-            // this.addParameter("LS_cause", cause)
+            this.addParameter("LS_cause", cause)
         }
 
         var requestedPollingInterval = 0L
@@ -23,7 +23,7 @@ class CreateSessionRequest(targetServer: String, polling: Boolean, cause: String
 
         this.addParameter("LS_polling_millis", requestedPollingInterval)
         this.addParameter("LS_idle_millis", requestedIdleTimeout)
-        this.addParameter("LS_cid", "mgQkwtwdysogQz2BJ4Ji%20kOj2Bg")
+        this.addParameter("LS_cid", "tqGko0tg4pkpW3CAN3O4hwLri8LBSG55l")
         if (options.internalMaxBandwidth > 0.0) {
             this.addParameter("LS_requested_max_bandwidth", options.internalMaxBandwidth)
         }
