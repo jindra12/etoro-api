@@ -31,8 +31,9 @@ dependencies {
     compile("org.jetbrains.kotlin:kotlin-reflect")
     compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     compile  ("org.jetbrains.kotlinx:kotlinx-coroutines-core")
-    compile("com.lightstreamer:ls-log-adapter-java:1.0.2")
-    compile("com.lightstreamer:ls-javase-client:4.3.7")
+    implementation(files("$projectDir/libs/ls-javase-client-3.1.1.jar"))
+    implementation("com.lightstreamer:ls-log-adapter-java:1.0.2")
+    implementation("com.lightstreamer:ls-javase-client:3.1.1")
 
     compile("com.fasterxml.jackson.module:jackson-module-kotlin:2.10.2")
 
