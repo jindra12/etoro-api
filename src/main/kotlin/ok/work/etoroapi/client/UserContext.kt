@@ -39,22 +39,5 @@ class UserContext {
         }
         val accountData = browserHttpClient.fetchAccountData("Demo")
         println(accountData)
-        //getAccountData(TradingMode.REAL)
-    }
-
-
-
-    fun getAccountData(mode: TradingMode) {
-        val req = prepareRequest("api/logindata/v1.1/logindata?" +
-                "client_request_id=${requestId}&conditionIncludeDisplayableInstruments=false&conditionIncludeMarkets=false&conditionIncludeMetadata=false&conditionIncludeMirrorValidation=false",
-                exchangeToken, mode, metadataService.getMetadata())
-                .GET()
-                .build()
-        val response = JSONObject(client.send(req, HttpResponse.BodyHandlers.ofString()).body())
-                .getJSONObject("AggregatedResult")
-                .getJSONObject("ApiResponses")
-        userdata = response.getJSONObject("CurrentUserData").getJSONObject("Content").getJSONArray("users").getJSONObject(0)
-        realgcid = userdata.getInt("realCID").toString()
-        demogcid = userdata.getInt("demoCID").toString()
     }
 }

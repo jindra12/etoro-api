@@ -347,8 +347,8 @@ class EtoroHttpClient {
             }
 
         }
-        position.takeProfitRate = position.takeProfitRate.round(assetInfo.getInt("Precision"))
-        position.stopLossRate = position.stopLossRate.round(assetInfo.getInt("Precision"))
+        position.takeProfitRate = position.takeProfitRate.round(if (assetInfo.has("Precision")) assetInfo.getInt("Precision") else 2);
+        position.stopLossRate = position.stopLossRate.round(if (assetInfo.has("Precision")) assetInfo.getInt("Precision") else 2);
 
         val positionRequestBody = EtoroPositionForOpen(
                 null,
@@ -358,26 +358,16 @@ class EtoroHttpClient {
                 position.stopLossRate,
                 position.takeProfitRate,
                 position.tsl,
-                assetInfo.getInt("MaxPositionUnits"),
+                if (assetInfo.has("MaxPositionUnits")) assetInfo.getInt("MaxPositionUnits") else 0,
                 0.01,
                 false,
                 position.amount,
                 ViewContext(price),
                 null,
-                assetInfo.getBoolean("AllowDiscountedRates")
+                if (assetInfo.has("AllowDiscountedRates")) assetInfo.getBoolean("AllowDiscountedRates") else false
         )
-
-        val req = prepareRequest(
-                "sapi/trade-${mode.name.toLowerCase()}/positions?client_request_id=${userContext.requestId}",
-                userContext.exchangeToken,
-                mode,
-                metadataService.getMetadata()
-        )
-                .POST(HttpRequest.BodyPublishers.ofString(JSONObject(positionRequestBody).toString()))
-                .build()
-        val body = client.send(req, HttpResponse.BodyHandlers.ofString()).body()
-
-        val transactionId = JSONObject(body).getString("Token")
+        val response = browserHttpClient.openPosition(mode.name.toLowerCase(), JSONObject(positionRequestBody).toString());
+        val transactionId = JSONObject(response).getString("Token")
         return transactionPool.getFromPool(transactionId) ?: Transaction(transactionId, null, null, null, null)
     }
 
@@ -385,34 +375,13 @@ class EtoroHttpClient {
         val id = positionRequestBody.PositionID
         val requestBody = JSONObject(positionRequestBody)
 
-        val req = prepareRequest(
-                "sapi/trade-${mode.name.toLowerCase()}/positions/$id?client_request_id=${userContext.requestId}",
-                userContext.exchangeToken,
-                mode,
-                metadataService.getMetadata()
-        )
-                .PUT(HttpRequest.BodyPublishers.ofString(requestBody.toString()))
-                .build()
-
-        val body = client.send(req, HttpResponse.BodyHandlers.ofString()).body()
-        val transactionId = JSONObject(body).getString("Token")
+        val response = browserHttpClient.updatePosition(mode.name.toLowerCase(), id, JSONObject(positionRequestBody).toString());
+        val transactionId = JSONObject(response).getString("Token")
         return transactionPool.getFromPool(transactionId) ?: Transaction(transactionId, null, null, null, null)
     }
 
     fun deletePosition(id: String, mode: TradingMode) {
-        val req = prepareOkRequest(
-                "sapi/trade-${mode.name.toLowerCase()}/positions/$id?PositionID=$id&client_request_id=${userContext.requestId}",
-                userContext.exchangeToken,
-                mode,
-                metadataService.getMetadata()
-        )
-        req.delete("{}".toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull()))
-
-        val code = okHttpClient.newCall(req.build()).execute().code
-
-        if (code != 200) {
-            throw RuntimeException("Failed close positionID $id")
-        }
+        browserHttpClient.deletePosition(mode.name.toLowerCase(), id);
     }
 
     fun watchMirroredAssets(mode: String): Int {
