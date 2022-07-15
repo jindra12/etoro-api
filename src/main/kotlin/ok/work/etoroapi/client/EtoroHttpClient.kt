@@ -364,7 +364,7 @@ class EtoroHttpClient {
                 position.amount,
                 ViewContext(price),
                 null,
-                if (assetInfo.has("AllowDiscountedRates")) assetInfo.getBoolean("AllowDiscountedRates") else false
+                if (position.type === PositionType.SELL) false else (if (assetInfo.has("AllowDiscountedRates")) assetInfo.getBoolean("AllowDiscountedRates") else false)
         )
         val response = browserHttpClient.openPosition(mode.name.toLowerCase(), JSONObject(positionRequestBody).toString());
         val transactionId = JSONObject(response).getString("Token")
