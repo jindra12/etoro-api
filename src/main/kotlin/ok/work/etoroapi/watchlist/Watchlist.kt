@@ -24,7 +24,7 @@ data class EtoroFullAsset(val InstrumentID: String, val SymbolFull: String, val 
     }
 }
 
-data class Asset(val id: String, val name: String, val fullName: String, var buy: Double?, var sell: Double?, var marketOpen: Boolean?, var askDiscounted: Double, var bidDiscounted: Double)
+data class Asset(val id: String, val name: String, val fullName: String, var buy: Double?, var sell: Double?, var marketOpen: Boolean?, var askDiscounted: Double, var bidDiscounted: Double, var maxPositionUnits: Int?)
 
 data class Image(val Width: Int, val Height: Int, val Uri: String)
 
@@ -72,7 +72,7 @@ class Watchlist {
         val asset = assetsMapIDs[id]
         if (asset != null) {
             lightStreamerClient.subscribeById(asset.InstrumentID)
-            watchlist[id] = Asset(asset.InstrumentID, asset.SymbolFull, asset.InstrumentDisplayName, null, null, null, 0.0, 0.0)
+            watchlist[id] = Asset(asset.InstrumentID, asset.SymbolFull, asset.InstrumentDisplayName, null, null, null, 0.0, 0.0, 0)
             saveToFile()
             return watchlist
         } else {
@@ -84,7 +84,7 @@ class Watchlist {
         val asset = assetsMapNames[name.toLowerCase()]
         if (asset != null) {
             lightStreamerClient.subscribeById(asset.InstrumentID)
-            watchlist[asset.InstrumentID] = Asset(asset.InstrumentID, asset.SymbolFull.toLowerCase(), asset.InstrumentDisplayName, null, null, null, 0.0, 0.0)
+            watchlist[asset.InstrumentID] = Asset(asset.InstrumentID, asset.SymbolFull.toLowerCase(), asset.InstrumentDisplayName, null, null, null, 0.0, 0.0, 0)
             saveToFile()
             return watchlist
         } else {
@@ -108,8 +108,12 @@ class Watchlist {
     }
 
     fun updatePrice(id: String, buy: String?, sell: String?) {
-        watchlist[id]?.buy = buy?.toDouble()
-        watchlist[id]?.sell = sell?.toDouble()
+      watchlist[id]?.buy = buy?.toDouble()
+      watchlist[id]?.sell = sell?.toDouble()
+    }
+
+    fun updateMaxPositionUnits(id: String, maxPositionUnits: Int?) {
+      watchlist[id].maxPositionUnits = maxPositionUnits
     }
 
     fun getPrice(id: String, type: PositionType, discounted: Boolean): Double {
