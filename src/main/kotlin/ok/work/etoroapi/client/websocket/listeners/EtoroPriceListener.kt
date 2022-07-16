@@ -27,7 +27,7 @@ class EtoroPriceListener : EtoroListener() {
 
         if (watchlist.getById(id) !== null) {
             watchlist.updatePrice(id, itemUpdate.getValue(2), itemUpdate.getValue(3))
-            watchlist.updateMaxPositionUnits(id, itemUpdate.getValue(13).toInt());
+            watchlist.updateMaxPositionUnits(id, itemUpdate.getValue(14).toInt());
             // For some market (HKG50), the market status could be wrongly set. we assume market open when there is price update
 /*            watchlist.updateMarketStatus(id, true)*/
             watchlist.updateMarketStatus(id, itemUpdate.getValue(4)!!.toBoolean())
