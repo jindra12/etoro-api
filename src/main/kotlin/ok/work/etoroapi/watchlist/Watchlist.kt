@@ -113,7 +113,7 @@ class Watchlist {
     }
 
     fun updateMaxPositionUnits(id: String, maxPositionUnits: Int?) {
-      watchlist[id].maxPositionUnits = maxPositionUnits
+      watchlist[id]?.maxPositionUnits = maxPositionUnits
     }
 
     fun getPrice(id: String, type: PositionType, discounted: Boolean): Double {
