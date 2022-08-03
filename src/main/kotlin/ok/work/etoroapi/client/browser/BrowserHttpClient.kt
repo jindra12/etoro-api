@@ -147,7 +147,7 @@ class BrowserHttpClient {
     fun fetchAssetInfo(id: String, mode: String): String {
         val driver = metadataService.getDriver()
         val metadata = metadataService.getMetadata()
-        val req = "return JSON.stringify(await (await fetch(\"https://www.etoro.com/sapi/trade-real/instruments/private/index?client_request_id=${userContext.requestId}\", {\n" +
+        val req = "return JSON.stringify(await (await fetch(\"https://www.etoro.com/sapi/trade-${mode}/instruments/private/index?client_request_id=${userContext.requestId}\", {\n" +
                 "  \"headers\": {\n" +
                 "    \"accept\": \"application/json, text/plain, */*\",\n" +
                 "    \"accept-language\": \"en\",\n" +
@@ -179,7 +179,7 @@ class BrowserHttpClient {
                      StartTime: String = "", mode: String): String {
         val driver = metadataService.getDriver()
         val metadata = metadataService.getMetadata()
-        val req = "return JSON.stringify(await (await fetch(\"https://www.etoro.com/sapi/trade-data-real/history/private/credit/flat?ItemsPerPage=$limit&PageNumber=$page&StartTime=$StartTime&client_request_id=${userContext.requestId}\", {\n" +
+        val req = "return JSON.stringify(await (await fetch(\"https://www.etoro.com/sapi/trade-data-${mode}/history/private/credit/flat?ItemsPerPage=$limit&PageNumber=$page&StartTime=$StartTime&client_request_id=${userContext.requestId}\", {\n" +
                 "  \"headers\": {\n" +
                 "    \"accept\": \"application/json, text/plain, */*\",\n" +
                 "    \"accept-language\": \"en-GB,en-US;q=0.9,en;q=0.8\",\n" +

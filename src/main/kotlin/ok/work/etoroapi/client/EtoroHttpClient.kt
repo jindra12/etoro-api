@@ -254,14 +254,7 @@ class EtoroHttpClient {
             StartTime: String = "",
             mode: TradingMode
     ): List<EtoroPosition> {
-        val req = prepareRequest(
-                "sapi/trade-data-${mode.name.toLowerCase()}/history/private/credit/flat?ItemsPerPage=$limit&PageNumber=$page&StartTime=$StartTime",
-                userContext.exchangeToken, mode, metadataService.getMetadata()
-        )
-                .GET()
-                .build()
-
-        val response = JSONObject(browserHttpClient.fetchHistory(limit, page, StartTime ,mode.toString()))
+        val response = JSONObject(browserHttpClient.fetchHistory(limit, page, StartTime, mode.toString()))
                 .getJSONArray("HistoryPositions")
                 .toString()
 
