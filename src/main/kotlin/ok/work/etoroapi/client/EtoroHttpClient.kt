@@ -388,7 +388,7 @@ class EtoroHttpClient {
     }
 
     fun getAssetInfo(id: String, mode: TradingMode): JSONObject {
-        return JSONObject(browserHttpClient.fetchAssetInfo(id, mode.toString())).getJSONArray("PrivateInstruments")
+        return JSONObject(browserHttpClient.fetchAssetInfo(id, "real")).getJSONArray("PrivateInstruments")
                 .getJSONObject(0)
     }
 
